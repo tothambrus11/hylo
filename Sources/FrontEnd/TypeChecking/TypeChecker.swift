@@ -3152,7 +3152,7 @@ struct TypeChecker {
   ///
   /// Declarations are lookup up qualified in `nominalScope` if it isn't `nil`. Otherwise, they are
   /// looked up unqualified from `scopeOfuse`. Access modifiers are ignored.
-  private mutating func lookup(
+  public mutating func lookup(
     _ name: SourceRepresentable<Name>, memberOf nominalScope: AnyType?,
     exposedTo scopeOfuse: AnyScopeID
   ) -> [AnyDeclID] {
@@ -3169,7 +3169,7 @@ struct TypeChecker {
   /// without qualification.
   ///
   /// - Requires: The imports of the module containing `scopeOfUse` have been configured.
-  private mutating func lookup(
+  public mutating func lookup(
     unqualified stem: String, in scopeOfUse: AnyScopeID
   ) -> Set<AnyDeclID> {
     var matches = Set<AnyDeclID>()
@@ -3217,7 +3217,7 @@ struct TypeChecker {
   /// referring to the left hand side of a binding initialization (e.g., `let x = x`).
   ///
   /// - Requires: `partialResult` doesn't contain any non-overloadable declaration.
-  private mutating func insert(
+  public mutating func insert(
     newMatches: Set<AnyDeclID>, into partialResult: inout Set<AnyDeclID>
   ) -> Bool {
     var hasNonOverloadable = false
@@ -3231,7 +3231,7 @@ struct TypeChecker {
 
   /// Returns the declarations that introduce a name with given `stem` in the declaration space of
   /// `lookupContext` and are exposed to `scopeOfUse`.
-  private mutating func lookup(
+  public mutating func lookup(
     _ stem: String, in lookupContext: AnyScopeID, exposedTo scopeOfUse: AnyScopeID
   ) -> Set<AnyDeclID> {
     switch lookupContext.kind {
@@ -3289,7 +3289,7 @@ struct TypeChecker {
 
   /// Returns the declarations that introduce a name with given `stem` as member of `nominalScope`
   /// and are exposed to `scopeOfUse`.
-  private mutating func lookup(
+  public mutating func lookup(
     _ stem: String, memberOf nominalScope: AnyType, exposedTo scopeOfUse: AnyScopeID
   ) -> Set<AnyDeclID> {
     switch nominalScope.base {
@@ -3343,7 +3343,7 @@ struct TypeChecker {
 
   /// Returns the declarations that introduce a name with given `stem` as member of `nominalScope`
   /// and are exposed to `scopeOfUse`.
-  private mutating func lookup(
+  public mutating func lookup(
     _ stem: String, memberOf nominalScope: AssociatedTypeType,
     exposedTo scopeOfUse: AnyScopeID
   ) -> Set<AnyDeclID> {
@@ -3380,7 +3380,7 @@ struct TypeChecker {
 
   /// Returns the declarations that introduce a name with given `stem` as member of `nominalScope`
   /// and are exposed to `scopeOfUse`.
-  private mutating func lookup(
+  public mutating func lookup(
     _ stem: String, memberOf nominalScope: GenericTypeParameterType,
     exposedTo scopeOfUse: AnyScopeID
   ) -> Set<AnyDeclID> {
@@ -3393,7 +3393,7 @@ struct TypeChecker {
 
   /// Returns the declarations that introduce a name with given `stem` as member of `nominalScope`
   /// and are exposed to `scopeOfUse`.
-  private mutating func lookup(
+  public mutating func lookup(
     _ stem: String, memberOf nominalScope: TypeAliasType, exposedTo scopeOfUse: AnyScopeID
   ) -> Set<AnyDeclID> {
     if let d = names(introducedIn: nominalScope.decl)[stem] {
@@ -3409,7 +3409,7 @@ struct TypeChecker {
 
   /// Returns the declarations that introduce a name with given `stem` in extensions of
   /// `nominalScope` and are exposed to `scopeOfUse`.
-  private mutating func lookup(
+  public mutating func lookup(
     _ stem: String, inExtensionsOf nominalScope: AnyType, exposedTo scopeOfUse: AnyScopeID
   ) -> Set<AnyDeclID> {
     var matches = Set<AnyDeclID>()
