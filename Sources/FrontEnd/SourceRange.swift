@@ -104,14 +104,14 @@ extension SourceRange: CustomStringConvertible {
   /// [Gnu-standard](https://www.gnu.org/prep/standards/html_node/Errors.html).
   public var gnuStandardText: String {
     let start = self.start.lineAndColumn
-    let head = "\(file.url.relativePath):\(start.line):\(start.column)"
+    let head = "\(file.url.relativePath):\(start.line).\(start.column)"
     if regionOfFile.isEmpty { return head }
 
     let end = file.position(endIndex).lineAndColumn
     if end.line == start.line {
       return head + "-\(end.column)"
     }
-    return head + "-\(end.line):\(end.column)"
+    return head + "-\(end.line).\(end.column)"
   }
 
   public var description: String { gnuStandardText }
