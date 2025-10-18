@@ -1,7 +1,7 @@
 import Utils
 
 /// A set of access effects.
-public struct AccessEffectSet: OptionSet, Hashable {
+public struct AccessEffectSet: OptionSet, Hashable, Sendable {
 
   public typealias RawValue = UInt8
 
@@ -70,6 +70,21 @@ public struct AccessEffectSet: OptionSet, Hashable {
     return i ? nil : k
   }
 
+  /// Value is accessed immutably.
+  public static let `let`: Self = [.let]
+
+  /// Value is assigned but never read.
+  public static let `set`: Self = [.set]
+
+  /// Value is accessed mutably.
+  public static let `inout`: Self = [.inout]
+
+  /// Value is consumed.
+  public static let sink: Self = [.sink]
+
+  /// Value may be accessed with any of the other effects, depending on the context.
+  public static let yielded: Self = [.yielded]
+
   /// A set with `set` and `inout`.
   public static let setOrInout: Self = [.set, .inout]
 
@@ -90,7 +105,7 @@ public struct AccessEffectSet: OptionSet, Hashable {
 extension AccessEffectSet {
 
   /// A collection with the elements of an access effect set.
-  public struct Elements: Collection {
+  public struct Elements: Collection, Sendable {
 
     public typealias Index = UInt8
 
